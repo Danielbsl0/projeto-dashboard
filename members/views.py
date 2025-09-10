@@ -1,6 +1,6 @@
-from django.http import HttpResponse
-from django.template import loader
+from django.shortcuts import render
+from members.models import Aluno
 
-def members(request):
-  template = loader.get_template('myfirst.html')
-  return HttpResponse(template.render())
+def lista_alunos(request):
+  lista_alunos = Aluno.objects.all()
+  return render(request, 'template.html', {'lista_alunos': lista_alunos})

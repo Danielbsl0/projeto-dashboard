@@ -51,7 +51,7 @@ class AlunoAdmin(admin.ModelAdmin):
     image_tag.short_description = 'Pré-visualização'
 
     def edit_link(self, obj):
-        url = reverse('admin:dashboard_app_aluno_change', args=[obj.pk])
+        url = reverse('admin:members_aluno_change', args=[obj.pk])
         return format_html('<a href="{}">Editar</a>', url)
     edit_link.short_description = "Ações"
 
@@ -89,7 +89,7 @@ class AlunoAdmin(admin.ModelAdmin):
                 html += '</tr></thead><tbody>'
 
             composite_pk = f"{b.aluno_matricula_id}-{b.disciplina_id}-{b.turma_id}-{b.turma_ano}"
-            edit_url = reverse('admin:dashboard_app_boletim_change', args=[composite_pk])
+            edit_url = reverse('admin:members_boletim_change', args=[composite_pk])
             
             html += '<tr>'
             fields = [
@@ -152,11 +152,11 @@ class BoletimAdmin(admin.ModelAdmin):
 
     # CORRIGIDO: Redireciona de volta para a página do aluno após salvar
     def response_change(self, request, obj):
-        aluno_url = reverse('admin:dashboard_app_aluno_change', args=[obj.aluno_matricula.pk])
+        aluno_url = reverse('admin:members_aluno_change', args=[obj.aluno_matricula.pk])
         return HttpResponseRedirect(aluno_url)
 
     def response_add(self, request, obj, post_url_continue=None):
-        aluno_url = reverse('admin:dashboard_app_aluno_change', args=[obj.aluno_matricula.pk])
+        aluno_url = reverse('admin:members_aluno_change', args=[obj.aluno_matricula.pk])
         return HttpResponseRedirect(aluno_url)
 
     # CORRIGIDO: Oculta o modelo do menu principal do admin
@@ -199,7 +199,7 @@ class TurmaAdmin(admin.ModelAdmin):
             return None
 
     def edit_link(self, obj):
-        url = reverse('admin:dashboard_app_turma_change', args=[obj.composite_pk])
+        url = reverse('admin:members_turma_change', args=[obj.composite_pk])
         return format_html('<a href="{}">Editar</a>', url)
     edit_link.short_description = "Ações"
 
@@ -211,7 +211,7 @@ class CursoAdmin(admin.ModelAdmin):
     list_display_links = None
 
     def edit_link(self, obj):
-        url = reverse('admin:dashboard_app_curso_change', args=[obj.pk])
+        url = reverse('admin:members_curso_change', args=[obj.pk])
         return format_html('<a href="{}">Editar</a>', url)
     edit_link.short_description = "Ações"
 
@@ -222,7 +222,7 @@ class SerieAdmin(admin.ModelAdmin):
     list_display_links = None
 
     def edit_link(self, obj):
-        url = reverse('admin:dashboard_app_serie_change', args=[obj.pk])
+        url = reverse('admin:members_serie_change', args=[obj.pk])
         return format_html('<a href="{}">Editar</a>', url)
     edit_link.short_description = "Ações"
 
@@ -235,7 +235,7 @@ class DisciplinaAdmin(admin.ModelAdmin):
     list_display_links = None
 
     def edit_link(self, obj):
-        url = reverse('admin:dashboard_app_disciplina_change', args=[obj.pk])
+        url = reverse('admin:members_disciplina_change', args=[obj.pk])
         return format_html('<a href="{}">Editar</a>', url)
     edit_link.short_description = "Ações"
 
@@ -275,7 +275,7 @@ class AlunoTurmaAdmin(admin.ModelAdmin):
             return None
 
     def edit_link(self, obj):
-        url = reverse('admin:dashboard_app_alunoturma_change', args=[obj.composite_pk])
+        url = reverse('admin:members_alunoturma_change', args=[obj.composite_pk])
         return format_html('<a href="{}">Editar</a>', url)
     edit_link.short_description = "Ações"
 
@@ -315,7 +315,7 @@ class DisciplinaCursoSerieAdmin(admin.ModelAdmin):
             return None
 
     def edit_link(self, obj):
-        url = reverse('admin:dashboard_app_disciplinacursoserie_change', args=[obj.composite_pk])
+        url = reverse('admin:members_disciplinacursoserie_change', args=[obj.composite_pk])
         return format_html('<a href="{}">Editar</a>', url)
     edit_link.short_description = "Ações"
 
@@ -326,7 +326,7 @@ class AreaDoConhecimentoAdmin(admin.ModelAdmin):
     list_display_links = None
 
     def edit_link(self, obj):
-        url = reverse('admin:dashboard_app_areadoconhecimento_change', args=[obj.pk])
+        url = reverse('admin:members_areadoconhecimento_change', args=[obj.pk])
         return format_html('<a href="{}">Editar</a>', url)
     edit_link.short_description = "Ações"
 
@@ -337,6 +337,6 @@ class TurnoAdmin(admin.ModelAdmin):
     list_display_links = None
 
     def edit_link(self, obj):
-        url = reverse('admin:dashboard_app_turno_change', args=[obj.pk])
+        url = reverse('admin:members_turno_change', args=[obj.pk])
         return format_html('<a href="{}">Editar</a>', url)
     edit_link.short_description = "Ações"
