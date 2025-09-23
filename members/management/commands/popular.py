@@ -1,26 +1,36 @@
 from django.core.management.base import BaseCommand
-from members.models import Disciplina, Curso, Serie, DisciplinaCursoSerie
+from members.models import Boletim, Aluno, Disciplina, Turma
+from random import randint, uniform, choice
 
 class Command(BaseCommand):
-    help = 'Popula a DisciplinaCursoSerie com vínculos entre disciplinas, cursos e séries.'
+    help = 'Popula a tabela Boletim com dados fictícios.'
 
     def handle(self, *args, **options):
-        # Pegue todas as disciplinas ainda não associadas
+        alunos = list(Aluno.objects.all())
         disciplinas = list(Disciplina.objects.all())
-        cursos = list(Curso.objects.all())
-        series = list(Serie.objects.all())
+        turmas = list(Turma.objects.all())
+        status_opcoes = ['Aprovado', 'Reprovado', 'Em andamento']
 
-        if not disciplinas or not cursos or not series:
-            self.stdout.write(self.style.ERROR('Certifique-se de que há disciplinas, cursos e séries cadastrados.'))
-            return
-
-        # Exemplo: associa cada disciplina ao primeiro curso e à primeira série disponíveis
-        for disc in disciplinas:
-            DisciplinaCursoSerie.objects.create(
-                disciplina=disc,
-                curso=cursos[0],
-                serie=series[0]
+        total = 0
+        for aluno in alunos:
+            disciplina = choice(disciplinas)
+            turma = choice(turmas)
+            Boletim.objects.create(
+                aluno_matricula=aluno,
+                disciplina=disciplina,
+                turma_id=turma.id,
+                turma_ano=turma.ano,
+                bimestre1=round(uniform(5, 10), 2),
+                bimestre2=round(uniform(5, 10), 2),
+                recusem1=round(uniform(0, 2), 2),
+                bimestre3=round(uniform(5, 10), 2),
+                bimestre4=round(uniform(5, 10), 2),
+                recusem2=round(uniform(0, 2), 2),
+                recfinal=round(uniform(0, 2), 2),
+                final=round(uniform(5, 10), 2),
+                faltas=randint(0, 20),
+                faltaspercent=randint(0, 100),
+                status=choice(status_opcoes)
             )
-            self.stdout.write(f'Vínculo criado: disciplina={disc.descricao}, curso={cursos[0].descricao}, serie={series[0].descricao}')
-
-        self.stdout.write(self.style.SUCCESS('Vinculações DisciplinaCursoSerie criadas!'))
+            total += 1
+        self.stdout.write(self.style.SUCCESS(f'{total} registros de Boletim criados!'))

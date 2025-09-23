@@ -1,0 +1,22 @@
+<h1>Gráfico de Boletim por Turma</h1>
+
+<form method="get">
+    <label for="turma">Escolha uma turma:</label>
+    <select id="turma" name="turma_id">
+        <option value="">-- Selecione --</option>
+        {% for turma in turmas %}
+            <option value="{{ turma.id }}" {% if turma.id|stringformat:'s' == selecionada %}selected{% endif %}>
+                {{ turma.descricao }} ({{ turma.ano }})
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filtrar</button>
+</form>
+
+{% if grafico %}
+    <img src="data:image/png;base64,{{ grafico }}" alt="Gráfico de médias da turma" style="max-width:100%;" />
+{% else %}
+    {% if selecionada %}
+        <p>Sem dados para a turma selecionada.</p>
+    {% endif %}
+{% endif %}
